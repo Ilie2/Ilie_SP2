@@ -35,4 +35,8 @@ public class Book {
     public void addContent(Section cap1) {
         cap1.print();
     }
+
+    public Object getTitle() {
+        return title;
+    }
 }

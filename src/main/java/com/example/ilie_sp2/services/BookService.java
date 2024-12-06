@@ -16,12 +16,16 @@ public class BookService {
         return books;
     }
 
+
     public Optional<Book> getBookById(String id) {
         return books.stream().filter(book -> book.getTitle().equals(id)).findFirst();
     }
 
     public void addBook(Book book) {
         books.add(book);
+    }
+    public void deleteBook(Book book) {
+        books.remove(book);
     }
 
     public void updateBook(String id, Book updatedBook) {

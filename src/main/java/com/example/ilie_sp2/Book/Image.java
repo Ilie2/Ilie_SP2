@@ -1,26 +1,32 @@
 package com.example.ilie_sp2.Book;
 
-import java.io.Serializable;
+import com.example.ilie_sp2.Book.BaseElement;
+import com.example.ilie_sp2.Book.Element;
+import jakarta.persistence.Entity;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class Image implements Element    {
+@Entity
+@Data
+@NoArgsConstructor
+public class Image extends BaseElement {
     private String url;
 
     public Image(String url) {
         this.url = url;
     }
+
     @Override
     public void print() {
-        System.out.println("Url :" + url);
+        System.out.println("Url: " + url);
     }
 
     @Override
     public void add(Element element) {
-
     }
 
     @Override
     public void remove(Element element) {
-
     }
 
     @Override

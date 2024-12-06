@@ -1,13 +1,16 @@
 package com.example.ilie_sp2.Book;
 
 import com.example.ilie_sp2.services.AlignRight;
+import jakarta.persistence.Entity;
+import lombok.*;
 
-public class Paragraph implements Element {
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Paragraph extends BaseElement {
     private String text;
 
-    public Paragraph(String text) {
-        this.text = text;
-    }
     @Override
     public void print() {
         System.out.println(text);
@@ -15,24 +18,20 @@ public class Paragraph implements Element {
 
     @Override
     public void add(Element element) {
-
+        // Nu este suportat pentru Paragraph
     }
 
     @Override
     public void remove(Element element) {
-
+        // Nu este suportat pentru Paragraph
     }
 
     @Override
     public Element get(int index) {
-        return null;
+        return null; // Nu este suportat pentru Paragraph
     }
 
     public String getText(AlignRight alignRight) {
         return text;
-    }
-
-
-    public void render(int i) {
     }
 }

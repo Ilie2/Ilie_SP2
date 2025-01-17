@@ -1,5 +1,6 @@
 package com.example.ilie_sp2.Book;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

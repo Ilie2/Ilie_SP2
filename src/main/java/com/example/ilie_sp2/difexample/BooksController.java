@@ -23,11 +23,11 @@ public class BooksController {
     }
 
     @GetMapping("/{id}")
-    public Book getBookById(@PathVariable String id) {
-        Command command = new GetBookByIdCommand(bookService, id);
-        commandInvoker.addCommand(command);
-        commandInvoker.executeCommands();
-        return bookService.getBookById(id).orElse(null);
+    public Book getBookById(@PathVariable int id) {
+//        Command command = new GetBookByIdCommand(bookService, id);
+//        commandInvoker.addCommand(command);
+//        commandInvoker.executeCommands();
+        return booksRepository.getReferenceById(id);
     }
 
     @PostMapping("/add")
@@ -50,7 +50,7 @@ public class BooksController {
 
     private AllBooksSubject allBooksSubject;
 
-    @PostMapping
+    @PostMapping("/new")
     public String newBook(@RequestBody Book newBookRequest) {
         Book book = booksRepository.save(newBookRequest);
         allBooksSubject.notifyObservers(book);

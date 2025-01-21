@@ -6,8 +6,15 @@ import com.example.ilie_sp2.services.CommandInvoker;
 import com.example.ilie_sp2.services.GetBookByIdCommand;
 import com.example.ilie_sp2.observer.AllBooksSubject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import com.example.ilie_sp2.repos.BooksRepository;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/books")
@@ -30,20 +37,11 @@ public class BooksController {
         return booksRepository.getReferenceById(id);
     }
 
-    @PostMapping("/add")
-    public void createBook(@RequestBody Book book) {
-        bookService.addBook(book);
-    }
-
-    @PutMapping("/{id}")
-    public void updateBook(@PathVariable String id, @RequestBody Book book) {
-        bookService.updateBook(id, book);
-    }
-
     @DeleteMapping("/{id}")
-    public void deleteBook(@PathVariable String id) {
-        bookService.deleteBook(id);
+    public void deleteBook(@PathVariable Integer id) {
+        booksRepository.deleteById(id);
     }
+
 
     @Autowired
     private BooksRepository booksRepository;
@@ -56,5 +54,8 @@ public class BooksController {
         allBooksSubject.notifyObservers(book);
         return "Book saved [" + book.getId() + "] " + book.getTitle();
     }
-
+    @GetMapping("/all")
+    public List<Book> getAllBooks() {
+        return booksRepository.findAll();
+    }
 }

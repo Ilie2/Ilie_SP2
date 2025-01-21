@@ -10,6 +10,17 @@ public class SseObserver implements Observer {
 
     public SseObserver(SseEmitter emitter) {
         this.emitter = emitter;
+        configureEmitter();
+    }
+
+    private void configureEmitter() {
+        emitter.onCompletion(() -> System.out.println("SSE connection completed"));
+        emitter.onTimeout(() -> System.out.println("SSE connection timed out"));
+        emitter.onError(e -> System.out.println("SSE connection error: " + e.getMessage()));
+    }
+
+    public SseEmitter getEmitter() {
+        return emitter;
     }
 
     @Override

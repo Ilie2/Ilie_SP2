@@ -12,7 +12,7 @@ import lombok.Data;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Image.class, name = "image"),
         @JsonSubTypes.Type(value = Paragraph.class, name = "paragraph"),
-        @JsonSubTypes.Type(value = Section.class, name = "section")
+        @JsonSubTypes.Type(value = Section.class, name = "section"),
 })
 @Entity
 @Data

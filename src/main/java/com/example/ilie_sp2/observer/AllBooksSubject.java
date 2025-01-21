@@ -2,39 +2,51 @@ package com.example.ilie_sp2.observer;
 
 import com.example.ilie_sp2.Book.Book;
 import com.example.ilie_sp2.repos.BooksRepository;
-import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
 @Component
 public class AllBooksSubject {
 
-    private final List<Observer> observers = new ArrayList<>();
+    private final List<SseObserver> observers = new ArrayList<>();
     private final BooksRepository booksRepository;
 
     public AllBooksSubject(BooksRepository booksRepository) {
         this.booksRepository = booksRepository;
     }
 
-    public void attach(Observer observer) {
+    public void attach(SseObserver observer) {
         observers.add(observer);
     }
 
+    public void detach(SseObserver observer) {
+        observers.remove(observer);
+    }
+
     public void notifyObservers(Book book) {
-        for (Observer observer : observers) {
+        // Notify each observer (connected client)
+        for (SseObserver observer : observers) {
             observer.update(book);
         }
     }
 
     public List<Book> getAllBooks() {
-        return booksRepository.findAll(); // Obține toate cărțile din baza de date
+        return booksRepository.findAll();  // Get all books from the repository
     }
 
     public Book getBookById(Integer id) {
-        return booksRepository.findById(id).orElse(null); // Obține o carte după ID
+        return booksRepository.findById(id).orElse(null);  // Get book by ID
     }
 
+    public void addBook(Book book) {
+        booksRepository.save(book);  // Save new book
+        notifyObservers(book);  // Notify observers (clients) about the new book
+    }
+
+    public void updateBook(Book book) {
+        booksRepository.save(book);  // Save the updated book
+        notifyObservers(book);  // Notify observers (clients) about the updated book
+    }
 }
